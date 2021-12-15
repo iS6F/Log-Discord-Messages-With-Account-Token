@@ -1,16 +1,11 @@
-import json
-import websocket
-import threading
-import time
+import json, websocket, threading, time
 
 def send(ws, request):
-    ws.send(json.dumps(request))
-    
+    ws.send(json.dumps(request))   
 def receive(ws):
     response = ws.recv()
     if response:
         return json.loads(response)
-
 def heartbeat(interval, ws):
     while True:
         time.sleep(interval)
@@ -41,19 +36,13 @@ pl = {
 }
 
 send(ws, pl)
-
 while True:
-
-    e = receive(ws)
-    
-    try:
-    
+    e = receive(ws)   
+    try:    
         content = e['d']['content']
         un = e['d']['author']['username']
         server = e['d']['guild_id']
-        channel = e['d']['channel_id']
-        
-        print(f'[{server} -> {channel}] {un} : {content}') # You can change the output message here
-        
+        channel = e['d']['channel_id']      
+        print(f'[{server} -> {channel}] {un} : {content}') # You can change the output message here      
     except:
         pass
